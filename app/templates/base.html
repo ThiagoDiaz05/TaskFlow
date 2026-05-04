@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TaskFlow</title>
+  </head>
+  <body>
+    <nav>
+      {% if user.is_authenticated %} Olá, {{ user.username }} |
+      <a href="{% url 'logout' %}">Sair</a>
+      {% else %}
+      <a href="{% url 'login' %}">Entrar</a> |
+      <a href="{% url 'register' %}">Cadastrar</a>
+      {% endif %}
+    </nav>
+    {% block content %}{% endblock %}
+  </body>
+</html>

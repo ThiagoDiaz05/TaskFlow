@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
-
+from django.contrib.auth.decorators import login_required
 
 class RegisterView(View):
     def get(self, request):
@@ -28,7 +28,7 @@ class LoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('cars_list')
+                return redirect('dashboard')
             else:
                 login_form = AuthenticationForm()    
         return render(request, 'login.html', {'login_form': login_form})
@@ -36,3 +36,7 @@ class LoginView(View):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard.html', {'usuario': request.user})
